@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
   <meta charset="UTF-8">
   <title>MaeruFlow@2026 — Teknik dan Prinsip Terbaik untuk Swing Trading</title>
-  amy
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     /* ==== BASIC PAGE STYLING ==== */
@@ -31,7 +30,7 @@
     }
 
     header h1 {
-      margin: 宙;
+      margin: 0;
       font-size: 2rem;
       font-weight: 600;
     }
@@ -56,18 +55,17 @@
     /* MAIN CONTAINER */
     .main-container {
       display: flex;
-        // “flex” adalah default; digunakan untuk memposisikan sidebar navigasi di samping.
       gap: 24px;
     }
 
-    /* NAV SIDEBAR */
+    /* NAV SIDEBAR (Desktop) */
     nav.sidebar {
       flex: 1;
       background: white;
       border-radius: 10px;
       padding: 20px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-      max-height: 70vh;
+      max-height: 80vh;
       overflow-y: auto;
       position: sticky;
       top: 20px;
@@ -85,7 +83,7 @@
     nav.sidebar ul {
       list-style: none;
       padding: 0;
-      margin: Viewport;
+      margin: 0;
     }
 
     nav.sidebar li {
@@ -97,11 +95,15 @@
       text-decoration: none;
       font-weight: 500;
       transition: color 0.2s;
+      display: block;
+      padding: 8px;
+      border-radius: 6px;
     }
 
     nav.sidebar a:hover {
+      background: #eff6ff;
       color: #1e40af;
-      text-decoration: underline;
+      text-decoration: none;
     }
 
     /* CONTENT AREA */
@@ -117,6 +119,7 @@
       border-radius: 10px;
       padding: 24px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      scroll-margin-top: 20px;
     }
 
     section.chapter h2 {
@@ -134,12 +137,11 @@
       font-size: 1.4rem;
     }
 
-    section.chapter p {
+    section.chapter p, section.chapter ul, section.chapter ol {
       margin: 12px 0;
     }
 
-    section.chapter ul {
-      margin: 12px 0;
+    section.chapter ul, section.chapter ol {
       padding-left: 24px;
     }
 
@@ -162,6 +164,7 @@
 
     section.chapter th {
       background: #f1f5f9;
+      color: #1e3c72;
     }
 
     /* FOOTER */
@@ -173,133 +176,277 @@
       padding: 20px 0;
     }
 
-    /* RESPONSIVE */
+    /* FLOATING MOBILE MENU BUTTON */
+    #mobileMenuBtn {
+      display: none;
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      color: white;
+      border: none;
+      padding: 14px 20px;
+      border-radius: 50px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      z-index: 1001;
+      transition: transform 0.2s;
+    }
+
+    #mobileMenuBtn:active {
+      transform: scale(0.95);
+    }
+
+    /* OVERLAY BACKGROUND FOR MOBILE MENU */
+    .menu-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 999;
+      backdrop-filter: blur(2px);
+    }
+
+    /* RESPONSIVE STYLES */
     @media (max-width: 768px) {
       .main-container {
         flex-direction: column;
       }
+      
+      #mobileMenuBtn {
+        display: block; /* Show floating button on mobile */
+      }
+
       nav.sidebar {
-        position: static;
-        max-height: none;
+        position: fixed;
+        top: 0;
+        left: -320px; /* Hide off-screen initially */
+        width: 260px;
+        height: 100vh;
+        max-height: 100vh;
+        z-index: 1000;
+        border-radius: 0;
+        transition: left 0.3s ease;
+      }
+
+      nav.sidebar.active {
+        left: 0; /* Slide in */
+      }
+
+      .menu-overlay.active {
+        display: block; /* Show overlay */
       }
     }
 
-    /* OTHER UTILITIES */
+    /* UTILITIES */
     .highlight {
       background: #fff9c4;
       padding: 2px 6px;
       border-radius: 4px;
     }
-
-    .note {
-      background: #e0f2fe;
-      border-left: 4px solid #0284c7;
-      padding: 12px;
-      margin: 16px 0;
-    }
   </style>
 </head>
-
 <body>
 
   <header>
     <div>
-      <h1>Hermes Agent — Teknik dan Prinsip Terbaik untuk Swing Trading</h1>
+      <h1>MaeruFlow@2026 — Teknik dan Prinsip Terbaik untuk Swing Trading</h1>
     </div>
-    <nav class="toc">
-      <a href="#chapter1">1. Pengantar Swing Trading</a>
-      ·
-      <a href="#chapter2">2. Dasar-Dasar Analisis Teknis</a>
-      ·
-      <a href="#chapter3">3. Memahami Konsep Fibonacci dalam Trading</a>
-      ·
-      <a href="#chapter4">4. Teknik Lanjutan dalam Strategi Support & Resistance Trading</a>
-      ·
-     ilenkan tiga titik…
-      ⤵ Lanjutkan membaca→
-      ...
-    </nav>
   </header>
+
+  <!-- Button for Mobile -->
+  <button id="mobileMenuBtn">☰ Daftar Isi</button>
+  <div class="menu-overlay" id="menuOverlay"></div>
 
   <div class="main-container">
     <!-- SIDEBAR NAVIGATION -->
-    <nav class="sidebar">
-      <h2>🗋 Daftar Isi</h`, "border-bottom": "none"} %>
-      
+    <nav class="sidebar" id="sidebar">
+      <h2>🗋 Daftar Isi</h2>
       <ul>
         <li><a href="#chapter1">1. Pengantar Swing Trading</a></li>
-        <li><a href="#chapter2">2. Dasar-Dasar Analisis Teknis</a></li>
-        <li><a href="#chapter3">3. Memahami Konsep Fibonacci dalam Trading</a></li>
-        <li><a href="#chapter4">4. Teknik Lanjutan dalam Strategi Support & Resistance Trading</a></li>
+        <li><a href="#chapter2">2. Dasar-Dasar Analisis Teknis & Fundamental</a></li>
+        <li><a href="#chapter3">3. Memahami Konsep Fibonacci</a></li>
+        <li><a href="#chapter4">4. Support & Resistance Trading</a></li>
         <li><a href="#chapter5">5. Strategi Channel Swing Trading</a></li>
         <li><a href="#chapter6">6. Strategi Breakout Swing Trading</a></li>
         <li><a href="#chapter7">7. Strategi Simple Moving Average (SMA)</a></li>
-        <li><a href="#chapter8">8. Strategi Moving Average Convergence Divergence (MACD)</a></li>
-        <li><a href="#chapter9">9. Tujuh Langkah Menuju Sukses dalam Trading</a></li>
+        <li><a href="#chapter8">8. Strategi MACD</a></li>
+        <li><a href="#chapter9">9. Uji Coba Swing Trading 5 Langkah</a></li>
       </ul>
     </nav>
 
     <!-- MAIN CONTENT -->
     <main class="content">
     
-      <!-- ==================== CHAPTER 1 ==================== -->
+      <!-- CHAPTER 1 -->
       <section class="chapter" id="chapter1">
         <h2>1. Pengantar Swing Trading</h2>
-        
-        <h3>📚 Apa itu Swing Trading</h3>
-        <p><strong>Swing trading</strong> adalah strategi trading jangka menengah yang bertujuan untuk menangkap pergerakan harga dalam rentang waktu beberapa hari hingga beberapa minggu. Trader swing mencari peluang dari fluktuasi harga jangka pendek sambil mengelola risiko dengan hati-hati.</p>
+        <h3>📚 Apa itu Swing Trading?</h3>
+        <p><strong>Swing trading</strong> adalah strategi trading jangka menengah yang bertujuan untuk menangkap pergerakan harga dalam jangka waktu beberapa hari hingga beberapa minggu[cite: 3]. Trader melakukan pembelian dan penjualan aset dalam periode waktu ini, mencari keuntungan dari pergerakan harga jangka pendek[cite: 3].</p>
 
-        <h3>💎 Manfaat Swing Trading</h3>
+        <h3>💎 Kelebihan dan Kekurangan</h3>
         <ul>
-          <li><strong>Potensi Keuntungan Signifikan:</strong> Manfaatkan pergerakan harga jangka pendek.</li>
-          <li><strong>Fleksibilitas Waktu:</strong> Tidak memerlukan pemantauan pasar terus-menerus.</li>
-         Chat
-          <li><strong>Akses ke Berbagai Kelas Aset:</strong> Saham, forex, komoditas, dan lainnya.</li>
+          <li><strong>Kelebihan:</strong> Memiliki potensi keuntungan yang signifikan, tidak memerlukan pemantauan pasar yang terus-menerus, dan dapat dilakukan pada berbagai jenis aset[cite: 3].</li>
+          <li><strong>Kekurangan:</strong> Risiko pasar yang tidak stabil, memerlukan analisis yang cermat, dan memiliki potensi kerugian yang tinggi[cite: 3].</li>
         </ul>
 
-        <h3>⚠️ Risiko dan Tantangan Swing Trading</h3>
-        <table>
-          <tr>
-            <th>Manfaat</th>
-            <th>Tantangan</th>
-          </tr>
-          <tr>
-            <td>Potensi Keuntungan Signifikan</td>
-            <td>Fluktuasi harga dapat menyebabkan kerugian</td>
-          </tr>
-          <tr>
-            <td>Waktu Trading yang Fleksibel</td>
-            <td>Memerlukan analisis yang cermat</td>
-          </tr>
-          <tr>
-            <td>Akses ke Berbagai Kelas Aset</td>
-            <td>Manajemen emosi dapat memengaruhi keputusan</td>
-          </tr>
-        </table>
+        <h3>📊 Perbedaan dengan Day Trading</h3>
+        <p>Perbedaan utama terletak pada durasi penahanan aset. Pada swing trading, posisi ditahan selama beberapa hari hingga beberapa minggu, sedangkan pada day trading, posisi dibuka dan ditutup dalam satu hari yang sama[cite: 3].</p>
+      </section>
 
-        <p>Memahami manfaat dan tantangan ini akan membantu Anda mempersiapkan diri untuk sukses dalam trading.</p>
+      <!-- CHAPTER 2 -->
+      <section class="chapter" id="chapter2">
+        <h2>2. Dasar-Dasar Analisis Teknis & Fundamental</h2>
+        <h3>Analisis Fundamental</h3>
+        <p>Analisis fundamental melibatkan evaluasi nilai intrinsik suatu aset berdasarkan faktor-faktor ekonomi dan keuangan[cite: 4]. Ini termasuk analisis laporan keuangan, prospek pertumbuhan perusahaan, dan kondisi pasar[cite: 4].</p>
+        
+        <h3>Analisis Teknikal</h3>
+        <p>Analisis teknis melibatkan studi pergerakan harga dan volume perdagangan untuk mengidentifikasi pola dan tren[cite: 4]. Ini digunakan untuk memprediksi pergerakan harga di masa depan[cite: 4].</p>
 
-        <h3>📊 Perbedaan dengan Gaya Trading Lainnya</h3>
+        <h3>Duo Dinamis</h3>
+        <p>Kombinasi analisis fundamental dan teknis memberikan gambaran yang lebih lengkap tentang aset[cite: 10]. Analisis fundamental membantu dalam mengidentifikasi aset yang memiliki nilai intrinsik baik, sementara analisis teknis membantu dalam menentukan waktu yang tepat untuk masuk dan keluar dari posisi[cite: 10].</p>
+      </section>
 
-        <p>Berikut adalah perbandingan ringkas antara swing trading dengan gaya trading populer lainnya:</p>
+      <!-- CHAPTER 3 -->
+      <section class="chapter" id="chapter3">
+        <h2>3. Memahami Konsep Fibonacci dalam Trading</h2>
+        <p>Strategi retracement Fibonacci adalah teknik trading yang menggunakan urutan Fibonacci dan rasio golden untuk mengidentifikasi level support dan resistance potensial dalam pergerakan harga[cite: 15]. Ini membantu trader menentukan titik masuk dan keluar yang optimal[cite: 15].</p>
 
-        <table>
-          <tr>
-            <th>Gaya Trading</th>
-            <th>Jangka Waktu</th>
-            <th>Target Profit per Trading</th>
-            <th>Risiko per Trading</th>
-            <th>Waktu Pemantauan</th>
-          </tr>
-          <tr>
-            <td>Swing Trading</td>
-            <td>Beberapa hari-minggu</td>
-            <td>5–20%</td>
-            <td>1–2% dari akun</td>
-            <td>30–60 menit per hari</td>
-          </tr>
-         Btn Berulang (tiga titik)
-          ... (remaining chapters continue similarly)
+        <h3>Rasio Fibonacci Kunci</h3>
+        <ul>
+          <li><strong>23,6%:</strong> Penyesuaian kecil[cite: 15].</li>
+          <li><strong>38,2%:</strong> Penyesuaian sedang[cite: 15].</li>
+          <li><strong>50%:</strong> Penyesuaian setengah dari pergerakan sebelumnya (secara psikologis penting)[cite: 15].</li>
+          <li><strong>61,8%:</strong> Penyesuaian besar, sering dianggap sebagai level "golden retracement"[cite: 15].</li>
+        </ul>
+
+        <h3>Penggunaan dalam Swing Trading</h3>
+        <p>Identifikasi tren utama yang jelas, lalu tunggu hingga harga mengalami retracement ke level-level kunci tersebut[cite: 15]. Cari sinyal pembalikan pada level-level tersebut dan keluar dari posisi ketika harga menembus level kunci[cite: 16]. Level retracement Fibonacci bukan jaminan pembalikan harga, oleh sebab itu manajemen risiko yang tepat sangat penting[cite: 16].</p>
+      </section>
+
+      <!-- CHAPTER 4 -->
+      <section class="chapter" id="chapter4">
+        <h2>4. Teknik Lanjutan dalam Strategi Support & Resistance Trading</h2>
+        <p><strong>Support:</strong> Level harga di mana tekanan beli cenderung mencegah penurunan lebih lanjut[cite: 17].<br>
+        <strong>Resistance:</strong> Level harga di mana tekanan jual cenderung mencegah kenaikan lebih lanjut[cite: 17].</p>
+
+        <h3>Menerapkan Strategi Trading</h3>
+        <ul>
+          <li><strong>Beli di Support dan Jual di Resistance:</strong> Strategi klasik di mana trader membeli ketika harga memantul dari level support, dan menjual ketika mendekati resistance[cite: 18].</li>
+          <li><strong>Breakout dan False Breakout:</strong> Menunggu konfirmasi harga menembus level-level ini, serta membatasi risiko dengan stop-loss di luar level tersebut[cite: 19].</li>
+        </ul>
+
+        <h3>Mengelola Risiko</h3>
+        <p>Tempatkan Stop-Loss di atas atau di bawah level resistance/support terdekat untuk memberikan ruang bagi fluktuasi normal[cite: 19]. Selalu tentukan ukuran posisi berdasarkan toleransi risiko per perdagangan (misalnya 1% dari akun)[cite: 19].</p>
+      </section>
+
+      <!-- CHAPTER 5 -->
+      <section class="chapter" id="chapter5">
+        <h2>5. Strategi Channel Swing Trading</h2>
+        <p>Channel swing trading adalah strategi yang mengidentifikasi pergerakan harga terbatasi dalam channel harga paralel[cite: 21].</p>
+        
+        <h3>Tipe-Tipe Channel</h3>
+        <ul>
+          <li><strong>Channel Naik (Ascending):</strong> High yang lebih tinggi dan low yang lebih tinggi[cite: 21].</li>
+          <li><strong>Channel Turun (Descending):</strong> High yang lebih rendah dan low yang lebih rendah[cite: 21].</li>
+          <li><strong>Channel Sideways (Range-Bound):</strong> High dan low yang relatif konsisten[cite: 21].</li>
+        </ul>
+
+        <h3>Konfirmasi Channel</h3>
+        <p>Harga harus menyentuh dan memantul dari batas channel setidaknya dua kali agar sebuah channel dapat dikatakan valid dan kuat[cite: 21]. Pemantulan yang dikonfirmasi dengan volume tinggi akan memverifikasi ketertarikan pasar[cite: 22].</p>
+      </section>
+
+      <!-- CHAPTER 6 -->
+      <section class="chapter" id="chapter6">
+        <h2>6. Strategi Breakout Swing Trading</h2>
+        <p>Breakout trading adalah strategi trading yang mengidentifikasi momen ketika harga saham keluar dari range yang telah terbentuk sebelumnya, sering kali dengan volume tinggi, yang menunjukkan potensi pergerakan harga yang signifikan[cite: 25].</p>
+
+        <h3>Memprediksi Potensi Breakout</h3>
+        <p>Breakout yang dikonfirmasi dengan volume tinggi cenderung lebih kuat[cite: 25]. Penutupan candlestick yang terletak secara konsisten di luar range sebelumnya juga menjadi bukti breakout yang tepat[cite: 25].</p>
+
+        <h3>Penempatan Target</h3>
+        <ul>
+          <li><strong>Target Standar:</strong> Tetapkan target yang sama dengan jarak risk/reward[cite: 27].</li>
+          <li><strong>Target Konservatif:</strong> Tetapkan target yang sedikit di luar area breakout[cite: 27].</li>
+        </ul>
+      </section>
+
+      <!-- CHAPTER 7 -->
+      <section class="chapter" id="chapter7">
+        <h2>7. Strategi Simple Moving Average (SMA)</h2>
+        <p>Simple Moving Average (SMA) menghitung rata-rata harga penutupan sekuritas selama periode waktu tertentu[cite: 28]. Ini memberikan gambaran yang lebih lambat dibanding EMA, namun sangat berguna dalam mengidentifikasi tren[cite: 28].</p>
+
+        <h3>Sinyal Trading Penting</h3>
+        <ul>
+          <li><strong>Golden Cross:</strong> Terjadi ketika SMA jangka pendek (misalnya, SMA 10 hari) memotong SMA jangka panjang (misalnya, SMA 50 hari) dari bawah ke atas. Ini merupakan sinyal beli[cite: 29].</li>
+          <li><strong>Death Cross:</strong> Terjadi ketika SMA jangka pendek memotong SMA jangka panjang dari atas ke bawah. Ini merupakan sinyal jual[cite: 29].</li>
+        </ul>
+      </section>
+
+      <!-- CHAPTER 8 -->
+      <section class="chapter" id="chapter8">
+        <h2>8. Strategi Moving Average Convergence Divergence (MACD)</h2>
+        <p>Moving Average Convergence Divergence (MACD) adalah indikator teknikal yang membantu mengidentifikasi momentum dan potensi pembalikan tren[cite: 31]. MACD mengukur kekuatan pergerakan harga[cite: 32].</p>
+
+        <h3>Interpretasi MACD</h3>
+        <ul>
+          <li><strong>Bullish Trend:</strong> Histogram MACD positif dan meningkat[cite: 32].</li>
+          <li><strong>Bearish Trend:</strong> Histogram MACD negatif dan menurun[cite: 32].</li>
+          <li><strong>Bullish Divergence:</strong> Terjadi bila MACD naik sementara harga turun, mengindikasikan potensi pembalikan ke arah bullish[cite: 32].</li>
+        </ul>
+      </section>
+
+      <!-- CHAPTER 9 -->
+      <section class="chapter" id="chapter9">
+        <h2>9. Uji Coba Swing Trading 5 Langkah</h2>
+        <p>Metode sistematis ini mengevaluasi dan memperbaiki strategi swing trading melalui 5 langkah yang terstruktur[cite: 34]:</p>
+        <ol>
+          <li><strong>The Set-Up:</strong> Menyiapkan kondisi trading, tujuan profit, strategi yang digunakan (indikator), dan aturan money management[cite: 34].</li>
+          <li><strong>The Trade Trigger:</strong> Menggunakan sinyal trading yang objektif dan menghindari trading berdasarkan firasat[cite: 35].</li>
+          <li><strong>The Stop-Loss Order:</strong> Menentukan dan menempatkan level stop-loss secara jelas sebelum masuk trading[cite: 35].</li>
+          <li><strong>The Profit-Taking Target Price:</strong> Menetapkan target profit yang jelas berdasarkan risk/reward sebelum masuk pasar[cite: 35].</li>
+          <li><strong>The Risk-Reward Ratio:</strong> Menghitung rasio antara potensi profit dan potensi risiko dengan rasio minimal 1.5:1[cite: 36].</li>
+        </ol>
+      </section>
+
     </main>
-  </body>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 MaeruFlow. Berdasarkan "E-Book: Swing Trading" oleh William Riley. Segala keputusan investasi berada di tangan pembaca.</p>
+  </footer>
+
+  <!-- JAVASCRIPT FOR MOBILE FLOATING MENU -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+      const sidebar = document.getElementById("sidebar");
+      const menuOverlay = document.getElementById("menuOverlay");
+      const sidebarLinks = sidebar.querySelectorAll("a");
+
+      // Toggle menu and overlay
+      function toggleMenu() {
+        sidebar.classList.toggle("active");
+        menuOverlay.classList.toggle("active");
+      }
+
+      // Hide menu
+      function closeMenu() {
+        sidebar.classList.remove("active");
+        menuOverlay.classList.remove("active");
+      }
+
+      // Event listeners
+      mobileMenuBtn.addEventListener("click", toggleMenu);
+      menuOverlay.addEventListener("click", closeMenu);
+
+      // Close menu when a link inside the sidebar is clicked
+      sidebarLinks.forEach(link => {
+        link.addEventListener("click", closeMenu);
+      });
+    });
+  </script>
+</body>
 </html>
